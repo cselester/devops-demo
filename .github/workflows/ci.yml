@@ -1,4 +1,4 @@
-name: DevOps Demo CI
+name: DevOps Demo CI/CD
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: ["main"]
 
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,7 +17,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: "3.8"
 
       - name: Install dependencies
         run: |
@@ -26,7 +26,7 @@ jobs:
 
       - name: Run tests
         run: |
-          echo "No real tests yet, but pipeline is working!"
+          echo "No real tests yet, pipeline works!"
 
       - name: Simulate Deployment
         run: |
@@ -34,3 +34,10 @@ jobs:
           mkdir -p deploy
           cp app.py deploy/
           echo "Deployment finished!"
+
+      - name: Run Flask App (Demo)
+        run: |
+          echo "Starting Flask app for demo..."
+          nohup python app.py &
+          sleep 5
+          echo "Flask app should be running (demo only)"
